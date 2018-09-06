@@ -7,17 +7,17 @@ import requests
 
 # myswots sdk main class.
 class MySwots:
-    API_ENTRY = "http://myswots.com/api/"
+    API_ENTRY = "https://myswots.com/api/"
     # Constructor
     def __init__(self, userId):
         self._userId = userId
 
     # Create test    
-    def createTest(self, skillId, noOfQuestions, topics):
+    def createQuiz(self, skillId, noOfQuestions, topics):
         pass
-    
-    # Load existing test with test ID
-    def loadTest(self, testId):
+        
+    # Load existing Quiz with quiz ID
+    def loadQuiz(self, quizId):
         pass
     
     # Get all skills
@@ -43,7 +43,10 @@ if __name__ == "__main__":
     mySwots = MySwots(19484)
     skills = mySwots.getSkillList()
     print("Skills: ",skills)
+
     print("================")
     topics = mySwots.getTopics(55)
     print("Topics for skill 55: ", topics)
-    #test = mySwots.createTest(55, 5, [2125, 2127, 2129, 2131])
+
+
+    #Quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131])

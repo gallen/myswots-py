@@ -2,10 +2,10 @@
 Python SDK for myswots.com api
 '''
 
-# Swots test class.
+# Swots quiz class.
 # User should not create object of this class directly. 
-# Object of this class should be created by MySwots.createTest or MySwots.loadTest
-class SwotsTest:
+# Object of this class should be created by MySwots.createQuiz or MySwots.loadQuiz
+class SwotsQuiz:
     # Constructor
     def __init__(self):
         pass
