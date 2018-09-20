@@ -14,7 +14,12 @@ class MySwots:
 
     # Create test    
     def createQuiz(self, skillId, noOfQuestions, topics):
-        pass
+        apiComponent = "quiz/users/" + str(self._userId) + "/tests"
+        payload = {"skillId": skillId,
+                "noOfQuestions": noOfQuestions,
+                "tags": topics
+            }
+        return self._postJson(apiComponent, payload)
         
     # Load existing Quiz with quiz ID
     def loadQuiz(self, quizId):
@@ -38,15 +43,22 @@ class MySwots:
         r = requests.get(endpoint)
         return r.json()
 
+    def _postJson(self, apiComponent, postData):
+        endpoint = MySwots.API_ENTRY + apiComponent
+        r = requests.post(endpoint, json = postData)
+        return r.json()
+
 
 if __name__ == "__main__":
     mySwots = MySwots(19484)
-    skills = mySwots.getSkillList()
+    
+    '''skills = mySwots.getSkillList()
     print("Skills: ",skills)
 
     print("================")
     topics = mySwots.getTopics(55)
-    print("Topics for skill 55: ", topics)
+    print("Topics for skill 55: ", topics)'''
 
-
-    #Quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131])
+    print("================")
+    quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131])
+    print("New created quiz: ", quiz)
