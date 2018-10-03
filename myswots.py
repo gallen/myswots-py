@@ -13,10 +13,11 @@ class MySwots:
         self._userId = userId
 
     # Create test    
-    def createQuiz(self, skillId, noOfQuestions, topics):
+    def createQuiz(self, skillId, noOfQuestions, topics, duration):
         apiComponent = "quiz/users/" + str(self._userId) + "/tests"
         payload = {"skillId": skillId,
                 "noOfQuestions": noOfQuestions,
+                "duration": duration,
                 "tags": topics
             }
         return self._postJson(apiComponent, payload)
@@ -60,5 +61,5 @@ if __name__ == "__main__":
     print("Topics for skill 55: ", topics)'''
 
     print("================")
-    quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131])
+    quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10)
     print("New created quiz: ", quiz)
