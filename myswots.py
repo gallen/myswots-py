@@ -3,6 +3,8 @@ Python SDK for myswots.com api
 '''
 
 import requests
+import swotsquiz
+from swotsquestion import *
 
 
 # myswots sdk main class.
@@ -20,8 +22,17 @@ class MySwots:
                 "duration": duration,
                 "tags": topics
             }
-        return self._postJson(apiComponent, payload)
+        quiz = self.postJson(apiComponent, payload)
+        return swotsquiz.SwotsQuiz(quiz, self)
         
+    @property
+    def apiEntry(self):
+        return MySwots.API_ENTRY
+
+    @property
+    def userId(self):
+        return self._userId
+
     # Load existing Quiz with quiz ID
     def loadQuiz(self, quizId):
         pass
@@ -29,22 +40,22 @@ class MySwots:
     # Get all skills
     # Return - a list of skills
     def getSkillList(self):
-        return self._getJson("skills")
+        return self.getJson("skills")
     
     # Get topics of one skill
     def getTopics(self, skillId):
-        return self._getJson("skills/" + str(skillId) + "/topics")
+        return self.getJson("skills/" + str(skillId) + "/topics")
 
     # Get one skill
     def getSkill(self, skillId):
-        return self._getJson("skills/" + str(skillId))
+        return self.getJson("skills/" + str(skillId))
     
-    def _getJson(self, apiComponent):
+    def getJson(self, apiComponent):
         endpoint = MySwots.API_ENTRY + apiComponent
         r = requests.get(endpoint)
         return r.json()
 
-    def _postJson(self, apiComponent, postData):
+    def postJson(self, apiComponent, postData):
         endpoint = MySwots.API_ENTRY + apiComponent
         r = requests.post(endpoint, json = postData)
         return r.json()
@@ -62,4 +73,11 @@ if __name__ == "__main__":
 
     print("================")
     quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10)
-    print("New created quiz: ", quiz)
+    print("New created quiz: ", quiz.testId)
+    print("Quiz user id: ", quiz.userId)
+    print("Quiz questions: ", quiz.questionIds)
+    for qId in quiz.questionIds:
+        q = quiz.loadQuestion(qId)
+        print("Question: ", q.question)
+        for o in q.options:
+            print("  ", o)
