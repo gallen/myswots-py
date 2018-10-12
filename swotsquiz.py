@@ -7,9 +7,13 @@ Python SDK for myswots.com api
 # Object of this class should be created by MySwots.createQuiz or MySwots.loadQuiz
 class SwotsQuiz:
     # Constructor
-    def __init__(self):
-        pass
+    def __init__(self, quiz):
+        self._quiz = quiz
     
+    @property
+    def questionIds(self):
+        return [q.questId for q in self._quiz.questionsMetadata]
+
     # Load one question
     def loadQuestion(self, questionId):
         pass
