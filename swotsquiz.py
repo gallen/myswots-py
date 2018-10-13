@@ -29,7 +29,7 @@ class SwotsQuiz:
         qDict = self._swots.getJson("quiz/users/" + str(self.userId) 
             + "/tests/" + str(self.testId)
             + "/question/" + str(questionId))
-        return swotsquestion.SwotsQuestion(self, qDict)
+        return swotsquestion.SwotsQuestion(self, questionId, qDict)
 
     # Load answer for one question
     def loadAnswer(self, questionId):

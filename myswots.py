@@ -81,3 +81,4 @@ if __name__ == "__main__":
         print("Question: ", q.question)
         for o in q.options:
             print("  ", o)
+        print("Answer: ", q.getAnswer())
