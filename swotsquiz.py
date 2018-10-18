@@ -31,17 +31,10 @@ class SwotsQuiz:
             + "/question/" + str(questionId))
         return swotsquestion.SwotsQuestion(self, questionId, qDict)
 
-    # Load answer for one question
-    def loadAnswer(self, questionId):
-        pass
-    
     # Get status for one question
     def getQuestionStatus(self, questionId):
         pass
 
-    # Finish this test
-    def finish(self):
-        pass
 
     # Get result for this test
     def getResult(self):

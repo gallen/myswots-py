@@ -35,7 +35,13 @@ class MySwots:
 
     # Load existing Quiz with quiz ID
     def loadQuiz(self, quizId):
-        pass
+        apiComponent = "quiz/users/" + str(self._userId) + "/tests/" + str(quizId)
+        quiz = self.getJson(apiComponent)
+        return swotsquiz.SwotsQuiz(quiz, self)
+    
+    def finishQuiz(self, quizId):
+        apiComponent = "quiz/users/" + str(self._userId) + "/tests/" + str(quizId) + "/finish"
+        self.getJson(apiComponent)    
     
     # Get all skills
     # Return - a list of skills
@@ -72,7 +78,8 @@ if __name__ == "__main__":
     print("Topics for skill 55: ", topics)'''
 
     print("================")
-    quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10)
+    #quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10)
+    quiz = mySwots.loadQuiz(111300)
     print("New created quiz: ", quiz.testId)
     print("Quiz user id: ", quiz.userId)
     print("Quiz questions: ", quiz.questionIds)
