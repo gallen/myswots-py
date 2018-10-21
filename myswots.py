@@ -1,5 +1,13 @@
 '''
-Python SDK for myswots.com api
+Python SDK for myswots.com api.
+
+Code flow to use this:
+1. Create MySwots instance.
+2. Create or load Quiz
+3. Load questions and answers
+
+e.g. check 'Unit test' section
+
 '''
 
 import requests
@@ -38,7 +46,8 @@ class MySwots:
         apiComponent = "quiz/users/" + str(self._userId) + "/tests/" + str(quizId)
         quiz = self.getJson(apiComponent)
         return swotsquiz.SwotsQuiz(quiz, self)
-    
+
+    # Finish a quiz  
     def finishQuiz(self, quizId):
         apiComponent = "quiz/users/" + str(self._userId) + "/tests/" + str(quizId) + "/finish"
         self.getJson(apiComponent)    
@@ -56,19 +65,22 @@ class MySwots:
     def getSkill(self, skillId):
         return self.getJson("skills/" + str(skillId))
     
+    # Helper function to send http get and return json
     def getJson(self, apiComponent):
         endpoint = MySwots.API_ENTRY + apiComponent
         r = requests.get(endpoint)
         return r.json()
 
+    # Helper function to send http post and return json
     def postJson(self, apiComponent, postData):
         endpoint = MySwots.API_ENTRY + apiComponent
         r = requests.post(endpoint, json = postData)
         return r.json()
 
 
+# Unit test
 if __name__ == "__main__":
-    mySwots = MySwots(19484)
+    mySwots = MySwots(19484) # create MySwots instance
     
     '''skills = mySwots.getSkillList()
     print("Skills: ",skills)
@@ -78,14 +90,14 @@ if __name__ == "__main__":
     print("Topics for skill 55: ", topics)'''
 
     print("================")
-    #quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10)
-    quiz = mySwots.loadQuiz(111300)
+    quiz = mySwots.createQuiz(55, 5, [2125, 2127, 2129, 2131], 10) # Create Quiz
+    #quiz = mySwots.loadQuiz(111300)
     print("New created quiz: ", quiz.testId)
     print("Quiz user id: ", quiz.userId)
     print("Quiz questions: ", quiz.questionIds)
     for qId in quiz.questionIds:
-        q = quiz.loadQuestion(qId)
+        q = quiz.loadQuestion(qId) # Load question
         print("Question: ", q.question)
-        for o in q.options:
+        for o in q.options: # Question options
             print("  ", o)
-        print("Answer: ", q.getAnswer())
+        print("Answer: ", q.answer) # Question answer

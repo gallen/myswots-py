@@ -15,10 +15,11 @@ class SessionAttrs:
         self._attrs = {}
         self._attrs["userId"] = quiz.userId # user Id
         self._attrs["testId"] = quiz.testId # quiz id
-        self._attrs["questions"] = quiz.questions # question id list
+        self._attrs["questions"] = quiz.questionIds # question id list
         self._attrs["cur"] = 0 # current question index
         self._attrs["correct"] = 0 # correct statistics
-        self._attrs["wrong"] = 0 # wrong statistics
+        self._attrs["answer"] = 0
+        self._attrs["answerText"] = ""
     
     def _initWithAttrs(self, attrs):
         self._attrs = attrs
@@ -31,8 +32,11 @@ class SessionAttrs:
         self._attrs["cur"] += 1
 
     @property
-    def curQId(self):
+    def cur(self):
         return self._attrs["questions"][self._attrs['cur']]
+
+    def isLast(self):
+        return self._attrs["cur"] >= len(self.attrs['questions']) - 1
     
     def correct(self):
         self._attrs["correct"] += 1

@@ -12,14 +12,17 @@ class SwotsQuiz:
         self._quiz = quizDict
         self._swots = swots
     
+    # userId
     @property
     def userId(self):
         return self._swots.userId
 
+    # testId (quizId)
     @property
     def testId(self):
         return self._quiz["testId"]
 
+    # questionId list
     @property
     def questionIds(self):
         return [q["questionId"] for q in self._quiz["questionsMetadata"]]
