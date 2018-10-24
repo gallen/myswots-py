@@ -44,7 +44,7 @@ class SwotsQuestion:
     def _getAnswer(self, myAnswer=1, timeSpent=5):
         ret = self.swots.postJson("/quiz/users/" + str(self._quiz.userId)
             + "/tests/" + str(self._quiz.testId)
-            + "/feedback/" + str(self.questionId), {"anser": myAnswer, "timeSpent": timeSpent})
+            + "/feedback/" + str(self.questionId), {"answer": myAnswer, "timeSpent": timeSpent})
         return ret["answer"]
 
     # Helper property to get MySwots instance
