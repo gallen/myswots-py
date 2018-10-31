@@ -11,8 +11,10 @@ e.g. check 'Unit test' section
 '''
 
 import requests
-import swotsquiz
-from swotsquestion import *
+from swotsquiz import SwotsQuiz
+from swotsquestion import SwotsQuestion
+from swotsanswer import SwotsAnswer
+from bs4 import BeautifulSoup
 
 
 # myswots sdk main class.
@@ -31,7 +33,7 @@ class MySwots:
                 "tags": topics
             }
         quiz = self.postJson(apiComponent, payload)
-        return swotsquiz.SwotsQuiz(quiz, self)
+        return SwotsQuiz(quiz, self)
         
     @property
     def apiEntry(self):
@@ -45,7 +47,7 @@ class MySwots:
     def loadQuiz(self, quizId):
         apiComponent = "quiz/users/" + str(self._userId) + "/tests/" + str(quizId)
         quiz = self.getJson(apiComponent)
-        return swotsquiz.SwotsQuiz(quiz, self)
+        return SwotsQuiz(quiz, self)
 
     # Finish a quiz  
     def finishQuiz(self, quizId):
@@ -64,6 +66,10 @@ class MySwots:
     # Get one skill
     def getSkill(self, skillId):
         return self.getJson("skills/" + str(skillId))
+
+    # Get answer
+    def getAnswer(self, testId, questionId, answer=1, timeSpent=5):
+        return SwotsAnswer(self, testId, questionId, answer, timeSpent)
     
     # Helper function to send http get and return json
     def getJson(self, apiComponent):
@@ -76,7 +82,6 @@ class MySwots:
         endpoint = MySwots.API_ENTRY + apiComponent
         r = requests.post(endpoint, json = postData)
         return r.json()
-
 
 # Unit test
 if __name__ == "__main__":
@@ -100,4 +105,9 @@ if __name__ == "__main__":
         print("Question: ", q.question)
         for o in q.options: # Question options
             print("  ", o)
-        print("Answer: ", q.answer) # Question answer
+        #print("Answer: ", q.answer) # Question answer
+        #print("Solution: ", q.solution)
+        answer = mySwots.getAnswer(quiz.testId, qId)
+        print("Answer: ", answer.answer) # Question answer
+        print("Answer Text: ", answer.answerText)
+        print("Solution: ", answer.solution)

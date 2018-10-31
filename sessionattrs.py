@@ -20,6 +20,7 @@ class SessionAttrs:
         self._attrs["correct"] = 0 # correct statistics
         self._attrs["answer"] = 0
         self._attrs["answerText"] = ""
+        self._attrs["solution"]  = ""
     
     def _initWithAttrs(self, attrs):
         self._attrs = attrs

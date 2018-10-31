@@ -2,11 +2,8 @@
 Python SDK for myswots.com api
 '''
 
-from bs4 import BeautifulSoup
 
-def remove_tags(text):
-    soup = BeautifulSoup(text, 'html.parser')
-    return soup.text
+from utils import remove_tags
 
 # Swots question
 # User should not create object of this class directly.
@@ -17,6 +14,7 @@ class SwotsQuestion:
         self._qDict = qDict
         self._questionId = questionId
         self._answer = None
+        self._feedback = None
 
     # Question text
     @property
@@ -31,21 +29,24 @@ class SwotsQuestion:
     # Question options (selections)
     @property
     def options(self):
-        return self._qDict["options"]
+        return [remove_tags(qo) for qo in self._qDict["options"]]
 
     # Answer
     @property
     def answer(self):
-        if self._answer == None:
-            self._answer = self._getAnswer()
-        return self._answer
+        self._getFeedback()
+        return self._feedback["answer"]
 
-
-    def _getAnswer(self, myAnswer=1, timeSpent=5):
-        ret = self.swots.postJson("/quiz/users/" + str(self._quiz.userId)
-            + "/tests/" + str(self._quiz.testId)
-            + "/feedback/" + str(self.questionId), {"answer": myAnswer, "timeSpent": timeSpent})
-        return ret["answer"]
+    @property
+    def solution(self):
+        self._getFeedback()
+        return remove_tags(self._feedback["solution"]["solutionText"])
+    
+    def _getFeedback(self, myAnswer = 1, timeSpent = 5):
+        if self._feedback == None:
+            self._feedback = self.swots.postJson("/quiz/users/" + str(self._quiz.userId)
+                + "/tests/" + str(self._quiz.testId)
+                + "/feedback/" + str(self.questionId), {"answer": myAnswer, "timeSpent": timeSpent})     
 
     # Helper property to get MySwots instance
     @property

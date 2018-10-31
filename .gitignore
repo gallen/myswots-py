@@ -1,2 +1,11 @@
 .vscode/
 *.pyc
+*.dist-info
+bs4/
+requests/
+certifi/
+chardet/
+idna/
+urllib3/
+bin/
+*.zip

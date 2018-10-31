@@ -22,7 +22,7 @@ class SwotsQuiz:
     def testId(self):
         return self._quiz["testId"]
 
-    # questionId list
+    # questionId
     @property
     def questionIds(self):
         return [q["questionId"] for q in self._quiz["questionsMetadata"]]
