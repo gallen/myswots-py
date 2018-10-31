@@ -153,9 +153,9 @@ def buildAnswerSpeaklet(sa, answer, nextq):
         sa.correct()
     else:
         addParagraph(ret, "The correct answer is " + str(answer.answer) + ": " + answer.answerText)
+    if answer.solution != "":
+        addSentence(ret, "Explanation: " + answer.solution)
     addSentence(ret, "Your score is " + str(sa.attrs['correct']))
-    if sa.attrs["solution"] != "":
-        addSentence(ret, "Explanation: " + sa.attrs["solution"])
 
     index = sa.attrs['cur']
     q = nextq
@@ -173,6 +173,8 @@ def buildLastAnswerSpeaklet(sa, answer):
         sa.correct()
     else:
         addParagraph(ret, "The correct answer is " + str(answer.answer) + ": " + answer.answerText)
+    if answer.solution != "":
+        addSentence(ret, "Explanation: " + answer.solution)
     addSentence(ret, "Your final score is " + str(sa.attrs['correct']))
     addParagraph(ret, "Thanks for playing. See you next time")
     endSpeaklet(ret) 
